@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>자기소개 | 황원준</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
     :root {
       --bg: #f7f7fb;
@@ -181,6 +183,17 @@
     }
     .timeline time { color: var(--muted); font-size: 0.9rem; }
 
+    /* ---------- residence / map ---------- */
+    #map {
+      position: relative;
+      z-index: 0;  /* 지도 레이어가 고정 헤더 위로 올라오지 않게 */
+      height: 320px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .map-status { margin: 8px 0 16px; color: var(--muted); font-size: 0.9rem; }
+    .address { margin: 0 0 4px; font-weight: 600; }
+
     /* ---------- footer ---------- */
     footer {
       text-align: center;
@@ -222,6 +235,7 @@
           <li><a href="#about">소개</a></li>
           <li><a href="#projects">프로젝트</a></li>
           <li><a href="#history">경력</a></li>
+          <li><a href="#residence">거주지</a></li>
           <li><a href="#contact">연락처</a></li>
         </ul>
       </nav>
@@ -290,6 +304,15 @@
       </ul>
     </section>
 
+    <!-- 거주지 -->
+    <section id="residence" class="page">
+      <h2>Residence</h2>
+      <div id="map"></div>
+      <p class="map-status" id="map-status">현재 위치를 찾는 중...</p>
+      <p class="address">경기도 안산시 상록구 월피동 예술대학로 6길 8</p>
+      <p>많은 방문 부탁드려요!</p>
+    </section>
+
     <!-- 연락처 -->
     <section id="contact" class="page">
       <h2>Contact</h2>
@@ -305,7 +328,43 @@
     <p>&copy; 2026 황원준. All rights reserved.</p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
   <script>
+    // ---------- 거주지 지도 ----------
+    var residenceMap = null;
+    var myPosition = null;
+
+    // 지도는 거주지 탭이 처음 보일 때 만든다 (숨겨진 상태에서 만들면 크기가 0이라 깨짐)
+    function initMap() {
+      residenceMap = L.map('map').setView([37.3219, 126.8309], 13); // 기본: 안산
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      }).addTo(residenceMap);
+      showMyPosition();
+    }
+
+    function showMyPosition() {
+      if (!residenceMap || !myPosition) return;
+      residenceMap.setView(myPosition, 16);
+      L.marker(myPosition).addTo(residenceMap).bindPopup('지금 내 위치').openPopup();
+    }
+
+    // 사이트를 열자마자 현재 위치를 요청
+    var mapStatus = document.getElementById('map-status');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        myPosition = [pos.coords.latitude, pos.coords.longitude];
+        mapStatus.textContent = '지도에 현재 위치를 표시했습니다.';
+        showMyPosition();
+      }, function () {
+        mapStatus.textContent = '위치 권한이 없어 현재 위치를 표시할 수 없습니다. (기본 위치: 안산)';
+      });
+    } else {
+      mapStatus.textContent = '이 브라우저는 위치 정보를 지원하지 않습니다.';
+    }
+
     // 주소의 #해시에 맞는 페이지 하나만 보여 준다 (없으면 홈)
     function showPage() {
       var id = location.hash.slice(1) || 'home';
@@ -322,6 +381,11 @@
         link.classList.toggle('current', link.getAttribute('href') === '#' + id);
       });
       window.scrollTo(0, 0);
+
+      if (id === 'residence') {
+        if (!residenceMap) initMap();
+        else residenceMap.invalidateSize();
+      }
     }
 
     window.addEventListener('hashchange', showPage);
