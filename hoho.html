@@ -66,28 +66,6 @@
     }
     nav a { color: var(--muted); font-size: 0.95rem; }
     nav a:hover { color: var(--accent); text-decoration: none; }
-    nav li { position: relative; }
-    nav .submenu {
-      list-style: none;
-      position: absolute;
-      top: 64px;
-      left: 0;
-      display: none;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 80px;
-      margin: 0;
-      padding: 6px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      z-index: 20;
-    }
-    nav li:hover .submenu { display: flex; }
-    nav .submenu a { font-size: 0.85rem; padding: 4px 8px; border-radius: 6px; }
-    nav .submenu a:hover { background: var(--accent-soft); }
-    nav .submenu a.active-sub { background: var(--accent); color: #fff !important; }
 
     /* ---------- layout ---------- */
     main {
@@ -240,46 +218,11 @@
       <div class="logo"><a href="#home">My Profile</a></div>
       <nav>
         <ul>
-          <li>
-            <a href="#home">홈</a>
-            <ul class="submenu">
-              <li><a href="#" class="sub-link">a</a></li>
-              <li><a href="#" class="sub-link">b</a></li>
-              <li><a href="#" class="sub-link">c</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#about">소개</a>
-            <ul class="submenu">
-              <li><a href="#" class="sub-link">a</a></li>
-              <li><a href="#" class="sub-link">b</a></li>
-              <li><a href="#" class="sub-link">c</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#projects">프로젝트</a>
-            <ul class="submenu">
-              <li><a href="#" class="sub-link">a</a></li>
-              <li><a href="#" class="sub-link">b</a></li>
-              <li><a href="#" class="sub-link">c</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#history">경력</a>
-            <ul class="submenu">
-              <li><a href="#" class="sub-link">a</a></li>
-              <li><a href="#" class="sub-link">b</a></li>
-              <li><a href="#" class="sub-link">c</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#contact">연락처</a>
-            <ul class="submenu">
-              <li><a href="#" class="sub-link">a</a></li>
-              <li><a href="#" class="sub-link">b</a></li>
-              <li><a href="#" class="sub-link">c</a></li>
-            </ul>
-          </li>
+          <li><a href="#home">홈</a></li>
+          <li><a href="#about">소개</a></li>
+          <li><a href="#projects">프로젝트</a></li>
+          <li><a href="#history">경력</a></li>
+          <li><a href="#contact">연락처</a></li>
         </ul>
       </nav>
     </div>
@@ -333,6 +276,10 @@
       <h2>Education &amp; Activities</h2>
       <ul class="timeline">
         <li>
+          <time>2019</time>
+          <div>수원시 킥복싱 아마추어 대회 <strong>우승</strong></div>
+        </li>
+        <li>
           <time>2022.03 ~ 현재</time>
           <div><strong>장안대학교</strong> 컴퓨터공학과 재학</div>
         </li>
@@ -380,7 +327,7 @@
     window.addEventListener('hashchange', showPage);
     showPage();
   </script>
-  <script src="../jsfile/mouse_point.js"></script>
+  <script src="../js/mouse_point.js"></script>
 
 </body>
 </html>
