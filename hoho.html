@@ -3,29 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>자기소개 | 황원준</title>
+  <title>자기소개 | 황원준 2026.10.26</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Noto+Serif+KR:wght@600;700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <style>
+    /* ---------- 색상: 종이 · 먹 · 테라코타 3가지 ---------- */
     :root {
-      --bg: #f7f7fb;
-      --card: #ffffff;
-      --text: #1f2330;
-      --muted: #6b7080;
-      --accent: #4f6bed;
-      --accent-soft: #e8ecff;
-      --line: #e3e5ee;
+      --paper: #FAF8F5;
+      --ink: #1C1B19;
+      --accent: #B5532F;
+
+      /* 새 색이 아니라 위 3색을 섞어 만든 농도 단계 */
+      --ink-soft: color-mix(in srgb, var(--ink) 64%, var(--paper));
+      --line: color-mix(in srgb, var(--ink) 11%, var(--paper));
+      --surface: color-mix(in srgb, var(--paper) 35%, #fff);
+      --accent-tint: color-mix(in srgb, var(--accent) 16%, transparent);
+
+      --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.05);
+      --shadow-hover: 0 2px 4px rgb(0 0 0 / 0.05), 0 16px 36px rgb(0 0 0 / 0.09);
+      --radius: 16px;
+
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+      --font-serif: "Fraunces", "Noto Serif KR", Georgia, serif;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #14161d;
-        --card: #1d2029;
-        --text: #e8eaf2;
-        --muted: #9aa0b2;
-        --accent: #8098ff;
-        --accent-soft: #262c45;
-        --line: #2c3040;
+        --paper: #161513;
+        --ink: #ECE7DF;
+        --accent: #E07A50;
+        --surface: color-mix(in srgb, var(--paper) 93%, var(--ink));
+        --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
+        --shadow-hover: 0 2px 4px rgb(0 0 0 / 0.35), 0 16px 36px rgb(0 0 0 / 0.35);
       }
     }
 
@@ -33,194 +47,355 @@
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Pretendard", "맑은 고딕", "Malgun Gothic", sans-serif;
-      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.75;
+      word-break: keep-all;
+      -webkit-font-smoothing: antialiased;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      letter-spacing: -0.015em;
+    }
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-decoration-color: var(--line);
+      text-underline-offset: 4px;
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+    a:hover { color: var(--accent); text-decoration-color: currentColor; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
     /* ---------- header / nav ---------- */
     header {
       position: sticky;
       top: 0;
       z-index: 10;
-      background: var(--card);
+      background: color-mix(in srgb, var(--paper) 86%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
     }
     .header-inner {
       max-width: 880px;
       margin: 0 auto;
-      padding: 12px 16px;
+      padding: 18px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 24px;
     }
-    .logo { font-weight: 800; font-size: 1.1rem; }
+    .logo { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; }
+    .logo a { text-decoration: none; }
+    .logo a:hover { color: var(--ink); }
     nav ul {
       list-style: none;
       display: flex;
-      gap: 16px;
+      gap: 28px;
       margin: 0;
       padding: 0;
     }
-    nav a { color: var(--muted); font-size: 0.95rem; }
-    nav a:hover { color: var(--accent); text-decoration: none; }
+    nav a {
+      position: relative;
+      display: inline-block;
+      padding: 4px 0;
+      color: var(--ink-soft);
+      font-size: 0.94rem;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    /* 마우스를 올리거나 현재 페이지면 밑줄이 왼쪽부터 스르륵 생김 */
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1.5px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    nav a:hover,
+    nav a.current { color: var(--ink); }
+    nav a:hover::after,
+    nav a.current::after { transform: scaleX(1); }
 
     /* ---------- layout ---------- */
     main {
+      flex: 1;
+      width: 100%;
       max-width: 880px;
       margin: 0 auto;
-      padding: 24px 16px 48px;
-    }
-    section {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 28px 24px;
-      margin-bottom: 20px;
+      padding: 80px 24px 112px;
     }
     h2 {
-      margin: 0 0 16px;
-      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 0 0 44px;
+      font-size: clamp(1.8rem, 1.35rem + 1.6vw, 2.3rem);
+      font-weight: 600;
+      line-height: 1.2;
     }
+    /* 섹션 번호(01~05)와 제목 뒤로 이어지는 가는 선 */
     h2::before {
-      content: "";
-      display: inline-block;
-      width: 6px;
-      height: 1.1em;
-      margin-right: 10px;
-      vertical-align: -3px;
-      border-radius: 3px;
-      background: var(--accent);
+      font-size: 0.42em;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--accent);
     }
+    h2::after {
+      content: "";
+      flex: 1;
+      min-width: 32px;
+      height: 1px;
+      background: var(--line);
+    }
+    #about h2::before { content: "01"; }
+    #projects h2::before { content: "02"; }
+    #history h2::before { content: "03"; }
+    #residence h2::before { content: "04"; }
+    #contact h2::before { content: "05"; }
 
     /* ---------- hero ---------- */
     .hero {
-      display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 56px;
+      min-height: min(52vh, 480px);
     }
     .avatar {
+      position: relative;
       flex-shrink: 0;
-      width: 120px;
-      height: 120px;
+      width: 152px;
+      height: 152px;
       border-radius: 50%;
-      background: var(--accent-soft);
-      color: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
-      font-weight: 800;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      color: var(--accent);
+      font-family: var(--font-serif);
+      font-size: 3.6rem;
+      font-weight: 600;
     }
-    .hero h1 { margin: 0 0 4px; font-size: 1.9rem; }
-    .hero .role { margin: 0 0 12px; color: var(--accent); font-weight: 600; }
-    .hero p { margin: 0; color: var(--muted); }
+    /* 마우스를 올리면 사진이 흔들림 없이 서서히 나타남 (show-photo 클래스는 mouse_point.js가 붙임) */
+    .avatar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--surface) url("../img/avatar-hover.jpg") center / contain no-repeat;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+    }
+    .avatar.show-photo::after { opacity: 1; }
+    .hero h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.1rem);
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .hero .role {
+      margin: 0 0 22px;
+      color: var(--accent);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .hero p {
+      margin: 0;
+      max-width: 34em;
+      color: var(--ink-soft);
+      font-size: 1.08rem;
+      line-height: 1.85;
+    }
 
     /* ---------- info table ---------- */
     dl.info {
       display: grid;
-      grid-template-columns: 90px 1fr;
-      gap: 8px 16px;
+      grid-template-columns: 140px 1fr;
       margin: 0;
+      border-bottom: 1px solid var(--line);
     }
-    dl.info dt { color: var(--muted); }
-    dl.info dd { margin: 0; overflow-wrap: anywhere; }
-
-    /* ---------- skills ---------- */
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 0;
+    dl.info dt,
+    dl.info dd {
       margin: 0;
-      list-style: none;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
     }
-    .tags li {
-      background: var(--accent-soft);
-      color: var(--accent);
-      padding: 4px 14px;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
+    dl.info dt { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.75rem; }
+    dl.info dd { font-weight: 500; overflow-wrap: anywhere; }
 
     /* ---------- projects ---------- */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
+    .cards { display: grid; gap: 24px; }
     article {
+      padding: 32px;
+      background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 18px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
-    article h3 { margin: 0 0 6px; font-size: 1.05rem; }
-    article p { margin: 0 0 8px; color: var(--muted); font-size: 0.95rem; }
-    article small { color: var(--accent); }
+    article:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
+    }
+    article h3 { margin: 0 0 8px; font-size: 1.45rem; font-weight: 600; line-height: 1.35; }
+    article p { margin: 0 0 14px; color: var(--ink-soft); }
+    article small { color: var(--accent); font-size: 0.84rem; font-weight: 600; letter-spacing: 0.02em; }
+
+    /* 내용이 긴 프로젝트 카드 (Smart Fridge) */
+    .cards article.project-wide { grid-column: 1 / -1; padding: 40px; }
+    .project-wide .subtitle { margin-bottom: 18px; color: var(--ink); font-size: 1.1rem; font-weight: 600; }
+    .project-wide h4 {
+      margin: 30px 0 12px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .project-wide ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); }
+    .project-wide li + li { margin-top: 8px; }
+    .project-wide li::marker { color: var(--accent); }
+    .project-wide li strong { color: var(--ink); font-weight: 600; }
 
     /* ---------- timeline ---------- */
     .timeline { list-style: none; margin: 0; padding: 0; }
     .timeline li {
       position: relative;
-      padding: 0 0 16px 22px;
-      border-left: 2px solid var(--line);
+      margin-left: 6px;
+      padding: 0 0 40px 34px;
+      border-left: 1px solid var(--line);
     }
     .timeline li:last-child { padding-bottom: 0; }
     .timeline li::before {
       content: "";
       position: absolute;
-      left: -7px;
+      left: -6px;
       top: 7px;
-      width: 12px;
-      height: 12px;
+      width: 11px;
+      height: 11px;
       border-radius: 50%;
-      background: var(--accent);
+      background: var(--paper);
+      border: 2px solid var(--accent);
+      transition: background-color 0.25s ease;
     }
-    .timeline time { color: var(--muted); font-size: 0.9rem; }
+    .timeline li:hover::before { background: var(--accent); }
+    .timeline time {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink-soft);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .timeline div { font-size: 1.08rem; }
 
     /* ---------- residence / map ---------- */
+    .map-search { display: flex; gap: 10px; margin-bottom: 16px; }
+    .map-search input {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit;
+      appearance: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .map-search input::placeholder { color: var(--ink-soft); }
+    .map-search input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-tint);
+    }
+    .map-search button {
+      padding: 12px 24px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--ink);
+      color: var(--paper);
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .map-search button:hover:not(:disabled) { background: var(--accent); }
+    .map-search button:disabled { opacity: 0.5; cursor: default; }
     #map {
       position: relative;
       z-index: 0;  /* 지도 레이어가 고정 헤더 위로 올라오지 않게 */
-      height: 320px;
+      height: 380px;
       border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
-    .map-status { margin: 8px 0 16px; color: var(--muted); font-size: 0.9rem; }
-    .address { margin: 0 0 4px; font-weight: 600; }
+    .leaflet-container { font-family: var(--font-sans); }
+    /* 지도 색을 차분하게 낮춰 페이지 톤에 맞춤 (마커는 그대로) */
+    #map .leaflet-tile-pane { filter: grayscale(0.7) sepia(0.12); }
+    @media (prefers-color-scheme: dark) {
+      #map .leaflet-tile-pane { filter: grayscale(0.8) invert(0.9) hue-rotate(180deg) brightness(0.9); }
+    }
+    .map-status { margin: 12px 0 36px; color: var(--ink-soft); font-size: 0.88rem; }
+    .address { margin: 0 0 6px; font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; }
+    .address + p { margin: 0; color: var(--ink-soft); }
 
     /* ---------- footer ---------- */
     footer {
+      padding: 32px 24px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--ink-soft);
+      font-size: 0.85rem;
       text-align: center;
-      color: var(--muted);
-      font-size: 0.9rem;
-      padding: 24px 16px 40px;
     }
+    footer p { margin: 0; }
 
-    /* ---------- page switching ---------- */
+    /* ---------- page switching / 등장 효과 ---------- */
     .page { display: none; }
-    .page.active { display: block; animation: fadeIn 0.35s ease; }
+    .page.active { display: block; animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
     .hero.page.active { display: flex; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: none; }
+    .reveal { opacity: 0; }
+    .reveal.visible { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+    @keyframes rise {
+      from { opacity: 0; translate: 0 14px; }
+      to   { opacity: 1; translate: 0 0; }
     }
-    .logo a { color: var(--text); }
-    .logo a:hover { text-decoration: none; }
-    nav a.current { color: var(--accent); font-weight: 700; }
 
     /* ---------- mobile ---------- */
-    @media (max-width: 600px) {
-      .header-inner { flex-direction: column; align-items: flex-start; }
-      nav ul { gap: 12px; flex-wrap: wrap; }
-      .hero { flex-direction: column; text-align: center; }
-      .avatar { width: 96px; height: 96px; font-size: 2.4rem; }
-      section { padding: 22px 18px; }
+    @media (max-width: 640px) {
+      .header-inner { flex-direction: column; align-items: flex-start; gap: 6px; padding: 14px 20px 10px; }
+      nav { width: 100%; overflow-x: auto; scrollbar-width: none; }
+      nav::-webkit-scrollbar { display: none; }
+      nav ul { gap: 22px; }
+      main { padding: 48px 20px 80px; }
+      h2 { gap: 12px; margin-bottom: 32px; }
+      .hero { flex-direction: column; align-items: flex-start; gap: 28px; min-height: 0; }
+      .avatar { width: 112px; height: 112px; font-size: 2.6rem; }
+      dl.info { grid-template-columns: 92px 1fr; }
+      article,
+      .cards article.project-wide { padding: 26px 22px; }
+      #map { height: 320px; }
+    }
+
+    /* 기기에서 '동작 줄이기'를 켠 사용자는 움직임 효과 끔 */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; }
     }
   </style>
 </head>
@@ -277,10 +452,45 @@
           <p>HTML5 시맨틱 태그와 CSS로 만든 반응형 자기소개 페이지.</p>
           <small>HTML · CSS</small>
         </article>
-        <article>
-          <h3>캡스톤 디자인</h3>
-          <p>학교 캡스톤 디자인 프로젝트를 팀원들과 함께 진행하고 있습니다.</p>
-          <small>진행 중</small>
+        <article class="project-wide">
+          <h3>Smart Fridge</h3>
+          <p class="subtitle">영수증 한 장으로 시작하는 AI 냉장고 관리 · 맞춤 레시피 추천 앱</p>
+          <p>
+            <small>캡스톤디자인 · 2인 팀 · 2026.03 ~ 진행 중</small><br>
+            내 역할: 안드로이드 앱 개발 (팀원: Spring Boot 백엔드 · DB · AI 연동)
+          </p>
+
+          <h4>소개</h4>
+          <p>가정에서 음식물쓰레기가 가장 많이 나온다는 문제에서 출발한 프로젝트입니다. 영수증을 촬영하면 식재료가 자동으로 등록되고, 유통기한이 임박한 재료를 우선 활용하는 맞춤 레시피를 추천해 줍니다. 저는 안드로이드 앱 전체를 맡아 화면 설계부터 서버 연동까지 구현했습니다.</p>
+
+          <h4>주요 기능</h4>
+          <ul>
+            <li><strong>냉장고 관리:</strong> 식재료 추가·수정·삭제, 유통기한 D-day 표시, 임박순 정렬</li>
+            <li><strong>영수증 스캔:</strong> CameraX로 영수증을 촬영해 서버로 전송, AI가 식재료명 추출</li>
+            <li><strong>맞춤 레시피 추천:</strong> 보유 재료 일치율 순 정렬, 알레르기 14종·식단 목적 5종 반영</li>
+            <li>한국어 / English 전환</li>
+          </ul>
+
+          <h4>기술 스택</h4>
+          <ul>
+            <li><strong>Android:</strong> Java, Material 3, Room, Retrofit2, CameraX, ML Kit</li>
+            <li><strong>Backend(팀원):</strong> Spring Boot, JPA, Oracle DB</li>
+            <li><strong>AI·데이터:</strong> Claude API(서버에서만 호출), 식약처 조리식품 레시피 공공데이터 1,156건</li>
+          </ul>
+
+          <h4>문제 해결</h4>
+          <ul>
+            <li><strong>사용자 데이터 혼재:</strong> 앱은 userId를 보냈지만 서버가 무시해 모든 사용자의 재료가 섞였습니다. 서버에 userId 컬럼과 사용자별 필터를 추가해 해결했습니다.</li>
+            <li><strong>API 키 노출 위험:</strong> 앱에 AI API 키를 넣으면 APK 디컴파일로 키가 노출될 수 있어, 영수증 분석을 서버 경유로 바꾸고 키는 서버에만 보관했습니다.</li>
+            <li><strong>영문 레시피 매칭 문제:</strong> 영문 데이터로는 한국어 재료명이 매칭되지 않아 한국어 공공데이터로 교체하고, 영문 결과는 ML Kit으로 자동 번역했습니다.</li>
+            <li><strong>앱·서버 데이터 동기화:</strong> 앱 로컬 DB(Room)와 서버 데이터를 id로 연결해 수정·삭제가 양쪽에 반영되도록 했습니다.</li>
+          </ul>
+
+          <h4>진행 현황</h4>
+          <ul>
+            <li><strong>완료:</strong> 냉장고 관리, 영수증 촬영·전송 화면, 레시피 추천·상세, 개인 설정, 한/영 전환</li>
+            <li><strong>진행·예정:</strong> 영수증 AI 인식 연동 테스트, 유통기한 임박 알림, AI 대화형 레시피 질문</li>
+          </ul>
         </article>
       </div>
     </section>
@@ -307,6 +517,10 @@
     <!-- 거주지 -->
     <section id="residence" class="page">
       <h2>Residence</h2>
+      <form class="map-search" id="map-search">
+        <input type="search" id="map-query" placeholder="장소나 주소를 검색하세요 (예: 안산시청)" required>
+        <button type="submit">검색</button>
+      </form>
       <div id="map"></div>
       <p class="map-status" id="map-status">현재 위치를 찾는 중...</p>
       <p class="address">경기도 안산시 상록구 월피동 예술대학로 6길 8</p>
@@ -320,6 +534,7 @@
         <dt>Phone</dt>  <dd><a href="tel:010-3189-3471">010-3189-3471</a></dd>
         <dt>Email</dt>  <dd><a href="mailto:hwangwonjun0515@gmail.com">hwangwonjun0515@gmail.com</a></dd>
         <dt>GitHub</dt> <dd><a href="https://github.com/hwangwonjun0515-cpu/git_project_20221039" target="_blank">github.com/hwangwonjun0515-cpu/git_project_20221039</a></dd>
+        <dt>Instagram</dt> <dd><a href="https://www.instagram.com/" target="_blank" rel="noopener">instagram.com</a></dd>
       </dl>
     </section>
   </main>
@@ -338,9 +553,10 @@
     // 지도는 거주지 탭이 처음 보일 때 만든다 (숨겨진 상태에서 만들면 크기가 0이라 깨짐)
     function initMap() {
       residenceMap = L.map('map').setView([37.3219, 126.8309], 13); // 기본: 안산
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      // API 키가 필요 없고, 파일을 직접 열어도 차단되지 않는 OSM France 지도
+      L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles by <a href="https://www.hotosm.org/">HOT</a> hosted by <a href="https://openstreetmap.fr/">OSM France</a>'
       }).addTo(residenceMap);
       showMyPosition();
     }
@@ -363,6 +579,62 @@
       });
     } else {
       mapStatus.textContent = '이 브라우저는 위치 정보를 지원하지 않습니다.';
+    }
+
+    // 지도 검색 (OpenStreetMap Nominatim, API 키 불필요 / 초당 1회 이하로 사용)
+    var searchMarker = null;
+    document.getElementById('map-search').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var query = document.getElementById('map-query').value.trim();
+      if (!query || !residenceMap) return;
+
+      var button = this.querySelector('button');
+      button.disabled = true;
+      mapStatus.textContent = '"' + query + '" 검색 중...';
+
+      fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&accept-language=ko&q=' + encodeURIComponent(query))
+        .then(function (res) { return res.json(); })
+        .then(function (results) {
+          if (results.length === 0) {
+            mapStatus.textContent = '"' + query + '"에 대한 검색 결과가 없습니다.';
+            return;
+          }
+          var place = results[0];
+          var latlng = [parseFloat(place.lat), parseFloat(place.lon)];
+
+          // 검색 결과 이름은 외부 데이터라 HTML이 아닌 글자로만 넣는다
+          var popup = document.createElement('div');
+          popup.textContent = place.display_name;
+
+          if (searchMarker) residenceMap.removeLayer(searchMarker);
+          searchMarker = L.marker(latlng).addTo(residenceMap).bindPopup(popup).openPopup();
+          residenceMap.setView(latlng, 16);
+          mapStatus.textContent = '검색 결과: ' + place.display_name;
+        })
+        .catch(function () {
+          mapStatus.textContent = '검색 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+        })
+        .finally(function () {
+          button.disabled = false;
+        });
+    });
+
+    // ---------- 스크롤 등장 효과 (화면에 들어오면 살짝 떠오르며 나타남) ----------
+    if ('IntersectionObserver' in window) {
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.cards article, .timeline li, dl.info').forEach(function (el) {
+        var order = Array.prototype.indexOf.call(el.parentElement.children, el);
+        el.style.animationDelay = Math.min(order, 4) * 90 + 'ms';
+        el.classList.add('reveal');
+        revealObserver.observe(el);
+      });
     }
 
     // 주소의 #해시에 맞는 페이지 하나만 보여 준다 (없으면 홈)
